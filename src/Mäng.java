@@ -11,7 +11,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
     private boolean mängib = false;
     private int skoor = 0;
 
-    private int kokkuRuute = 21;
+    private int kokkuRuute = 24;
 
     private Timer aeg;
     private int viivitus = 8;
@@ -26,7 +26,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
     private KastideKaart kaart;
 
     public Mäng() {
-        kaart = new KastideKaart(3, 7);
+        kaart = new KastideKaart(3, 8);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -43,7 +43,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         kaart.joonista((Graphics2D)g);
 
         //ääred
-        g.setColor(Color.yellow);
+        g.setColor(Color.orange);
         g.fillRect(0, 0, 3, 592);
         g.fillRect(0, 0, 692, 3);
         g.fillRect(683, 0, 3, 592);
@@ -54,20 +54,20 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         g.drawString(""+skoor, 590, 30);
 
         //alus
-        g.setColor(Color.green);
-        g.fillRect(mängijaX, 550, 100, 8);
+        g.setColor(Color.cyan);
+        g.fillRect(mängijaX, 550, 100, 9);
 
         //pall
-        g.setColor(Color.yellow);
+        g.setColor(Color.magenta);
         g.fillOval(pallX, pallY, 20, 20);
 
         if(kokkuRuute <= 0) {
             mängib = false;
             pallXSuund = 0;
             pallYSuund = 0;
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("Võitsid!! skoor: "+skoor, 290, 300);
+            g.drawString("Võitsid!! Sinu skoor: "+skoor, 280, 300);
 
             g.setFont(new Font("serif", Font.BOLD, 20));
             g.drawString("Vajuta ENTER, et uuesti mängida ", 230, 350);
@@ -77,9 +77,9 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
             mängib = false;
             pallXSuund = 0;
             pallYSuund = 0;
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("Mäng läbi! skoor: "+skoor, 190, 300);
+            g.drawString("Mäng on läbi! Sinu skoor: "+skoor, 180, 300);
 
             g.setFont(new Font("serif", Font.BOLD, 20));
             g.drawString("Vajuta ENTER, et uuesti mängida ", 230, 350);
@@ -196,3 +196,4 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
     }
 
 }
+
