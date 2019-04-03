@@ -17,18 +17,8 @@ public class KastideKaart {
         return kastiPikkus;
     }
 
-    /*public void setKaart(int[][] kaart) {
-        this.kaart = kaart;
-    }
 
-    public void setKastiLaius(int kastiLaius) {
-        this.kastiLaius = kastiLaius;
-    }
-
-    public void setKastiPikkus(int kastiPikkus) {
-        this.kastiPikkus = kastiPikkus;
-    }*/
-
+    //teeb kastide maatriksi
     public KastideKaart(int rida, int veerg) {
         kaart = new int[rida][veerg];
         for (int i= 0; i< kaart.length; i++) {
@@ -41,6 +31,7 @@ public class KastideKaart {
         kastiPikkus = 150/rida;
     }
 
+    //Joonistab kastid taustale
     public void joonista(Graphics2D g) {
         for (int i= 0; i< kaart.length; i++) {
             for (int j = 0; j < kaart[0].length; j++) {
@@ -56,6 +47,7 @@ public class KastideKaart {
         }
     }
 
+    //Kas on kast või ei
     public void kastiVäärtus(int väärtus, int rida, int veerg) {
         kaart[rida][veerg] = väärtus;
     }
