@@ -86,6 +86,8 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.magenta);
         g.fillOval(pallX, pallY, 20, 20);
 
+        //g.drawString("Vajuta nuppu,et alsutada mängu",280,300);
+
         if(kokkuRuute <= 0) {
             mängib = false;
             pallXSuund = 0;
@@ -193,10 +195,12 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
             }
         }
 
+
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+
             if(!mängib) {
                 mängib = true;
-                pallX = 120;
+                //pallX = 120;
                 pallY = 350;
                 pallXSuund = -1;
                 pallYSuund = -2;
