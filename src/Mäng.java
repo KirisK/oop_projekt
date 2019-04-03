@@ -10,33 +10,33 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Mäng extends JPanel implements KeyListener, ActionListener {
+    //Vajalikud muutujad:
     private boolean mängib = false;
     private int skoor = 0;
-
-    private int kokkuRuute = 24;
-
+    private int mänguAlgus = 0;
+    private int kokkuRuute = 28;
     private Timer aeg;
     private int viivitus = 8;
-
     private int mängijaX = 310;
-
-    public static int randInt(int min, int max) {
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
-
-    private int pallX = randInt(10,690);
-    private int pallY = 350;
-
+    private int pallY = 360;
     private int pallXSuund = -1;
     private int pallYSuund = -2;
 
     private KastideKaart kaart;
 
+    //Randomi funktsioon
+    public static int randInt(int min, int max) {
+        Random suvaline = new Random();
+        int suvalineNR = suvaline.nextInt((max - min) + 1) + min;
+        return suvalineNR;
+    }
+    //Iga mängu algus on palli X koordinaat random
+    private int pallX = randInt(10,690);
+
+
+
     public Mäng() {
-        kaart = new KastideKaart(3, 8);
+        kaart = new KastideKaart(4, 7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -44,6 +44,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         aeg.start();
     }
 
+    //Taust, värvid, üldine kujundus
     public void paint(Graphics g) {
         // taust
         g.setColor(Color.black);
@@ -64,7 +65,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
 
 
 
-        //Kaart
+             //Kaart
         kaart.joonista((Graphics2D)g);
 
         //ääred
@@ -86,27 +87,37 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.magenta);
         g.fillOval(pallX, pallY, 20, 20);
 
-        //g.drawString("Vajuta nuppu,et alsutada mängu",280,300);
+        //Alguse tekst
+        if (mänguAlgus == 0) {
+            g.setColor(Color.green);
+            g.setFont(new Font("serif", Font.BOLD, 22));
+            g.drawString("RUUDULÕHKUJA", 250, 250);
+            g.drawString("Eesmärk on palliga eemaldada kõik kastid", 150, 300);
+            g.drawString("Alusega pead palli püüdma, et see mängu alalt välja ei läheks", 70, 350);
+            g.drawString("Alustamiseks liiguta mängu alust parema/vasaku nooleklahviga", 60, 400);
+        }
 
+        //Mängu võites (ruudud otsas)
         if(kokkuRuute <= 0) {
             mängib = false;
             pallXSuund = 0;
             pallYSuund = 0;
             g.setColor(Color.BLUE);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("Võitsid!! Sinu skoor: "+skoor, 280, 300);
+            g.drawString("Võitsid!! skoor: "+skoor, 260, 300);
 
             g.setFont(new Font("serif", Font.BOLD, 20));
             g.drawString("Vajuta ENTER, et uuesti mängida ", 230, 350);
         }
 
+        //Mängu kaotades (pall läheb välja)
         if(pallY > 570) {
             mängib = false;
             pallXSuund = 0;
             pallYSuund = 0;
             g.setColor(Color.BLUE);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("Mäng on läbi! Sinu skoor: "+skoor, 180, 300);
+            g.drawString("Mäng läbi! skoor: "+skoor, 240, 300);
 
             g.setFont(new Font("serif", Font.BOLD, 20));
             g.drawString("Vajuta ENTER, et uuesti mängida ", 230, 350);
@@ -121,10 +132,12 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         aeg.start();
         if(mängib) {
+            mänguAlgus = 1;
             if(new Rectangle(pallX, pallY, 20, 20).intersects(new Rectangle(mängijaX, 550, 100, 8))) {
                 pallYSuund = -pallYSuund;
             }
 
+            //Kontrollib kas pall on kasti vastu läinud
             A: for(int i = 0; i<kaart.getKaart().length; i++) {
                 for(int j = 0; j< kaart.getKaart()[0].length; j++) {
                     if(kaart.getKaart()[i][j] > 0) {
@@ -154,6 +167,8 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
                 }
             }
 
+
+            //Palli liigutamine
             pallX += pallXSuund;
             pallY += pallYSuund;
             if(pallX < 0) {
@@ -177,6 +192,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        //Kontrollib nooleklahve
         if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if(mängijaX >=600) {
                 mängijaX = 600;
@@ -196,24 +212,26 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         }
 
 
+        //Enteri kontroll et mängu uuesti alustada kui mäng ei käi
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-
             if(!mängib) {
                 mängib = true;
-                //pallX = 120;
-                pallY = 350;
+                pallX = randInt(10,690);;
+                pallY = 360;
                 pallXSuund = -1;
                 pallYSuund = -2;
                 mängijaX = 310;
                 skoor = 0;
-                kokkuRuute = 24;
-                kaart = new KastideKaart(3, 8);
+                kokkuRuute = 28;
+                kaart = new KastideKaart(4, 7);
 
                 repaint();
             }
         }
     }
 
+
+    //Alusega liikumine
     public void liiguParemale() {
         mängib = true;
         mängijaX+=20;
@@ -225,4 +243,3 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
     }
 
 }
-
