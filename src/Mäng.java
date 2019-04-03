@@ -3,9 +3,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.Timer;
-
-import javax.swing.JPanel;
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class Mäng extends JPanel implements KeyListener, ActionListener {
     private boolean mängib = false;
@@ -18,8 +20,16 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
 
     private int mängijaX = 310;
 
-    private int pallX = 120;
+    public static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
+
+
+    private int pallX = randInt(10,690);
     private int pallY = 350;
+
     private int pallXSuund = -1;
     private int pallYSuund = -2;
 
@@ -39,14 +49,29 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.black);
         g.fillRect(1, 1, 692, 592);
 
+        //JFrame f= new JFrame();
+        //try{
+          //  f.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("C:\\Users\\Karina Kiris\\Desktop\\oop_projekt2\\77024.jpg")))));
+
+        //}catch (IOException e)
+        //{
+            //System.out.println("Image doesn't exist");
+
+        //}
+        //f.setBounds(10, 10, 700, 600);
+        //f.setVisible(true);
+
+
+
+
         //Kaart
         kaart.joonista((Graphics2D)g);
 
         //ääred
         g.setColor(Color.orange);
-        g.fillRect(0, 0, 3, 592);
-        g.fillRect(0, 0, 692, 3);
-        g.fillRect(683, 0, 3, 592);
+        g.fillRect(0, 0, 4, 592);
+        g.fillRect(0, 0, 692, 4);
+        g.fillRect(683, 0, 4, 592);
 
         //skoor
         g.setColor(Color.white);
@@ -177,8 +202,8 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
                 pallYSuund = -2;
                 mängijaX = 310;
                 skoor = 0;
-                kokkuRuute = 21;
-                kaart = new KastideKaart(3, 7);
+                kokkuRuute = 24;
+                kaart = new KastideKaart(3, 8);
 
                 repaint();
             }
