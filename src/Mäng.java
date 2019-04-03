@@ -9,11 +9,12 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+
 public class Mäng extends JPanel implements KeyListener, ActionListener {
     private boolean mängib = false;
     private int skoor = 0;
 
-    private int kokkuRuute = 24;
+    private int kokkuRuute = 21;
 
     private Timer aeg;
     private int viivitus = 8;
@@ -26,17 +27,15 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         return randomNum;
     }
 
-
     private int pallX = randInt(10,690);
     private int pallY = 350;
-
     private int pallXSuund = -1;
     private int pallYSuund = -2;
 
     private KastideKaart kaart;
 
     public Mäng() {
-        kaart = new KastideKaart(3, 8);
+        kaart = new KastideKaart(3, 7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -92,7 +91,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
             pallYSuund = 0;
             g.setColor(Color.BLUE);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("Võitsid!! Sinu skoor: "+skoor, 280, 300);
+            g.drawString("Võitsid!! skoor: "+skoor, 260, 300);
 
             g.setFont(new Font("serif", Font.BOLD, 20));
             g.drawString("Vajuta ENTER, et uuesti mängida ", 230, 350);
@@ -104,7 +103,7 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
             pallYSuund = 0;
             g.setColor(Color.BLUE);
             g.setFont(new Font("serif", Font.BOLD, 30));
-            g.drawString("Mäng on läbi! Sinu skoor: "+skoor, 180, 300);
+            g.drawString("Mäng läbi! skoor: "+skoor, 240, 300);
 
             g.setFont(new Font("serif", Font.BOLD, 20));
             g.drawString("Vajuta ENTER, et uuesti mängida ", 230, 350);
@@ -196,14 +195,14 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
             if(!mängib) {
                 mängib = true;
-                pallX = 120;
+                pallX = randInt(10,690);;
                 pallY = 350;
                 pallXSuund = -1;
                 pallYSuund = -2;
                 mängijaX = 310;
                 skoor = 0;
-                kokkuRuute = 24;
-                kaart = new KastideKaart(3, 8);
+                kokkuRuute = 21;
+                kaart = new KastideKaart(3, 7);
 
                 repaint();
             }
@@ -221,4 +220,3 @@ public class Mäng extends JPanel implements KeyListener, ActionListener {
     }
 
 }
-
